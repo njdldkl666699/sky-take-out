@@ -38,7 +38,7 @@ public interface CategoryService {
      * @param status
      * @param id
      */
-    void startOrStop(Integer status, Long id);
+    void enableOrDisable(Integer status, Long id);
 
     /**
      * 根据类型查询分类
