@@ -84,7 +84,7 @@ public class EmployeeController {
      */
     @PostMapping
     @Operation(summary = "新增员工")
-    public Result<Object> save(EmployeeDTO employeeDTO) {
+    public Result<?> save(EmployeeDTO employeeDTO) {
         log.info("新增员工：{}", employeeDTO);
         employeeService.save(employeeDTO);
         return Result.success();
@@ -102,5 +102,48 @@ public class EmployeeController {
         log.info("员工分页查询，参数：{}", employeePageQueryDTO);
         PageResult pageResult = employeeService.pageQuery(employeePageQueryDTO);
         return Result.success(pageResult);
+    }
+
+    /**
+     * 启用禁用员工账号
+     *
+     * @param status
+     * @param id
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    @Operation(summary = "启用禁用员工账户")
+    public Result<?> enableOrDisable(@PathVariable Integer status, Long id) {
+        log.info("启用或禁用员工，账户：{}，状态：{}", id, status);
+        employeeService.enableOrDisable(status, id);
+        return Result.success();
+    }
+
+    /**
+     * 根据id查询员工信息
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    @Operation(summary = "根据id查询员工信息")
+    public Result<Employee> getById(@PathVariable Long id) {
+        log.info("根据id查询员工信息，id：{}", id);
+        Employee employee = employeeService.getById(id);
+        return Result.success(employee);
+    }
+
+    /**
+     * 编辑员工信息
+     *
+     * @param employeeDTO
+     * @return
+     */
+    @PutMapping
+    @Operation(summary = "编辑员工信息")
+    public Result<?> update(EmployeeDTO employeeDTO) {
+        log.info("编辑员工信息：{}", employeeDTO);
+        employeeService.update(employeeDTO);
+        return Result.success();
     }
 }
