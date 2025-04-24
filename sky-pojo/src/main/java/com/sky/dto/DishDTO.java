@@ -1,6 +1,7 @@
 package com.sky.dto;
 
 import com.sky.entity.DishFlavor;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -9,22 +10,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Schema(name="菜品DTO")
 public class DishDTO implements Serializable {
 
+    @Schema(name="菜品ID")
     private Long id;
-    //菜品名称
+
+    @Schema(name="菜品名称")
     private String name;
-    //菜品分类id
+
+    @Schema(name="分类ID")
     private Long categoryId;
-    //菜品价格
+
+    @Schema(name="菜品价格")
     private BigDecimal price;
-    //图片
+
+    @Schema(name="图片")
     private String image;
-    //描述信息
+
+    @Schema(name="描述信息")
     private String description;
-    //0 停售 1 起售
+
+    @Schema(name="菜品状态", description = "0 停售 1 起售")
     private Integer status;
-    //口味
+
+    @Schema(name="口味")
     private List<DishFlavor> flavors = new ArrayList<>();
 
 }
