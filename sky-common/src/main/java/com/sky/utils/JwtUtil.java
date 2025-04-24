@@ -28,7 +28,7 @@ public class JwtUtil {
         MacAlgorithm alg = Jwts.SIG.HS256;
         // 生成秘钥
         // 短密码会抛异常，在项目配置里配置一个大于32字节的密码
-        SecretKey key= Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+        SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
 
         // 生成JWT的时间
         long expMillis = System.currentTimeMillis() + ttlMillis;
