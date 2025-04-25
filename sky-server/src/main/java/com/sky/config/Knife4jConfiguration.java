@@ -3,6 +3,7 @@ package com.sky.config;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,6 +19,7 @@ public class Knife4jConfiguration {
      * @return
      */
     @Bean
+    @ConditionalOnMissingBean
     public OpenAPI openAPI() {
         log.info("开始注册Knife4j...");
         return new OpenAPI()

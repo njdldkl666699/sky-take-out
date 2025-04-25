@@ -10,31 +10,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Schema(name="菜品DTO")
+@Schema(name = "菜品DTO")
 public class DishDTO implements Serializable {
 
-    @Schema(name="菜品ID")
+    @Schema(name = "菜品ID")
     private Long id;
 
-    @Schema(name="菜品名称")
+    @Schema(name = "菜品名称")
     private String name;
 
-    @Schema(name="分类ID")
+    @Schema(name = "分类ID")
     private Long categoryId;
 
-    @Schema(name="菜品价格")
+    @Schema(name = "菜品价格")
     private BigDecimal price;
 
-    @Schema(name="图片")
+    @Schema(name = "图片")
     private String image;
 
-    @Schema(name="描述信息")
+    @Schema(name = "描述信息")
     private String description;
 
-    @Schema(name="菜品状态", description = "0 停售 1 起售")
+    @Schema(name = "菜品状态", description = "0 停售 1 起售")
     private Integer status;
 
-    @Schema(name="口味")
+    @Schema(name = "口味")
     private List<DishFlavor> flavors = new ArrayList<>();
 
 }
