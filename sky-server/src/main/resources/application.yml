@@ -35,11 +35,11 @@ sky:
   jwt:
     # 设置jwt签名加密时使用的秘钥，
     # HS256加密需要32位以上的密钥
-    admin-secret-key: ioNjdldklSkyTakeOut666699SecretKey
-    # 设置jwt过期时间
-    admin-ttl: 7200000
+    admin-secret-key: ${sky.jwt.admin-secret-key}
     # 设置前端传递过来的令牌名称
-    admin-token-name: token
+    admin-token-name: ${sky.jwt.admin-token-name}
+    # 设置jwt过期时间
+    admin-ttl: ${sky.jwt.admin-ttl}
   alioss:
     bucket-name: ${sky.alioss.bucket-name}
     endpoint: ${sky.alioss.endpoint}
