@@ -33,7 +33,7 @@ public class CategoryController {
      * @return
      */
     @PostMapping
-    @Operation(description = "新增分类")
+    @Operation(summary = "新增分类")
     public Result<String> save(@RequestBody CategoryDTO categoryDTO) {
         log.info("新增分类：{}", categoryDTO);
         categoryService.save(categoryDTO);
@@ -47,7 +47,7 @@ public class CategoryController {
      * @return
      */
     @GetMapping("/page")
-    @Operation(description = "分类分页查询")
+    @Operation(summary = "分类分页查询")
     public Result<PageResult> pageQuery(CategoryPageQueryDTO categoryPageQueryDTO) {
         log.info("分页查询：{}", categoryPageQueryDTO);
         PageResult pageResult = categoryService.pageQuery(categoryPageQueryDTO);
@@ -61,7 +61,7 @@ public class CategoryController {
      * @return
      */
     @DeleteMapping
-    @Operation(description = "删除分类")
+    @Operation(summary = "删除分类")
     public Result<String> deleteById(Long id) {
         log.info("删除分类：{}", id);
         categoryService.deleteById(id);
@@ -75,7 +75,7 @@ public class CategoryController {
      * @return
      */
     @PutMapping
-    @Operation(description = "修改分类")
+    @Operation(summary = "修改分类")
     public Result<String> update(@RequestBody CategoryDTO categoryDTO) {
         categoryService.update(categoryDTO);
         return Result.success();
@@ -89,7 +89,7 @@ public class CategoryController {
      * @return
      */
     @PostMapping("/status/{status}")
-    @Operation(description = "启用禁用分类")
+    @Operation(summary = "启用禁用分类")
     public Result<String> enableOrDisable(@PathVariable("status") Integer status, Long id) {
         categoryService.enableOrDisable(status, id);
         return Result.success();
@@ -102,7 +102,7 @@ public class CategoryController {
      * @return
      */
     @GetMapping("/list")
-    @Operation(description = "根据类型查询分类")
+    @Operation(summary = "根据类型查询分类")
     public Result<List<Category>> list(Integer type) {
         List<Category> list = categoryService.list(type);
         return Result.success(list);

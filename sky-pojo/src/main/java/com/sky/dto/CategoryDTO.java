@@ -5,6 +5,10 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/*
+TODO: 修改Schema注解的使用，将name改为title
+ */
+
 @Data
 @Schema(name = "分类DTO")
 public class CategoryDTO implements Serializable {

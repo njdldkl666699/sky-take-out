@@ -13,6 +13,12 @@ spring:
       url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: ${sky.datasource.username}
       password: ${sky.datasource.password}
+  data:
+    redis:
+      host: ${sky.redis.host}
+      port: ${sky.redis.port}
+      password: ${sky.redis.password}
+      database: ${sky.redis.database}
 
 
 mybatis:
@@ -63,15 +69,6 @@ springdoc:
   # 启用文档，默认开启
   api-docs:
     path: /v3/api-docs    #swagger后端请求地址
-  group-configs:
-    - group: 'admin'
-      display-name: '管理端接口'
-      paths-to-match: '/admin/**'
-      packages-to-scan: 'com.sky.controller.admin'
-    - group: 'user'
-      display-name: '用户端接口'
-      paths-to-match: '/user/**'
-      packages-to-scan: 'com.sky.controller.user'
 
 #knife4j配置
 knife4j:

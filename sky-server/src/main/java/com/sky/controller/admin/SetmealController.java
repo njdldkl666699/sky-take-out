@@ -44,7 +44,7 @@ public class SetmealController {
      * @return
      */
     @GetMapping("/page")
-    @Operation(description = "分页查询")
+    @Operation(summary = "分页查询")
     public Result<PageResult> pageQuery(SetmealPageQueryDTO setmealPageQueryDTO) {
         log.info("分页查询：{}", setmealPageQueryDTO);
         PageResult pageResult = setmealService.pageQuery(setmealPageQueryDTO);
@@ -58,7 +58,7 @@ public class SetmealController {
      * @return
      */
     @DeleteMapping
-    @Operation(description = "批量删除套餐")
+    @Operation(summary = "批量删除套餐")
     public Result<?> delete(@RequestParam List<Long> ids) {
         log.info("批量删除套餐：{}", ids);
         setmealService.deleteBatch(ids);
@@ -72,7 +72,7 @@ public class SetmealController {
      * @return
      */
     @GetMapping("/{id}")
-    @Operation(description = "根据id查询套餐")
+    @Operation(summary = "根据id查询套餐")
     public Result<SetmealVO> getById(@PathVariable Long id) {
         log.info("根据id查询套餐：{}", id);
         SetmealVO setmealVO = setmealService.getByIdWithDishes(id);
@@ -86,7 +86,7 @@ public class SetmealController {
      * @return
      */
     @PutMapping
-    @Operation(description = "修改套餐")
+    @Operation(summary = "修改套餐")
     public Result<?> update(@RequestBody SetmealDTO setmealDTO) {
         log.info("修改套餐：{}", setmealDTO);
         setmealService.update(setmealDTO);
@@ -101,7 +101,7 @@ public class SetmealController {
      * @return
      */
     @PostMapping("/status/{status}")
-    @Operation(description = "套餐起售、停售")
+    @Operation(summary = "套餐起售、停售")
     public Result<?> enableOrDisable(@PathVariable Integer status, Long id) {
         log.info("套餐起售、停售，id：{}，状态：{}", id, status);
         setmealService.enableOrDisable(status,id);
