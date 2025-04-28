@@ -10,31 +10,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Schema(name = "套餐DTO")
+@Schema(title = "套餐DTO")
 public class SetmealDTO implements Serializable {
 
-    @Schema(name = "套餐ID")
+    @Schema(title = "套餐ID")
     private Long id;
 
-    @Schema(name = "分类ID")
+    @Schema(title = "分类ID")
     private Long categoryId;
 
-    @Schema(name = "套餐名称")
+    @Schema(title = "套餐名称")
     private String name;
 
-    @Schema(name = "套餐价格")
+    @Schema(title = "套餐价格")
     private BigDecimal price;
 
-    @Schema(name = "套餐状态", description = "0:停用 1:启用")
+    @Schema(title = "套餐状态", description = "0:停用 1:启用")
     private Integer status;
 
-    @Schema(name = "描述信息")
+    @Schema(title = "描述信息")
     private String description;
 
-    @Schema(name = "图片")
+    @Schema(title = "图片")
     private String image;
 
-    @Schema(name = "套餐菜品关系")
+    @Schema(title = "套餐菜品关系")
     private List<SetmealDish> setmealDishes = new ArrayList<>();
 
 }

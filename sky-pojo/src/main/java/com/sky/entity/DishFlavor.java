@@ -1,5 +1,6 @@
 package com.sky.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,18 +15,21 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(title = "菜品口味")
 public class DishFlavor implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Schema(title = "菜品口味id")
     private Long id;
-    //菜品id
+
+    @Schema(title = "菜品id")
     private Long dishId;
 
-    //口味名称
+    @Schema(title = "口味名称")
     private String name;
 
-    //口味数据list
+    @Schema(title = "口味数据列表")
     private String value;
 
 }

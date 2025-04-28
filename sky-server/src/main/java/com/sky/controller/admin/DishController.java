@@ -103,19 +103,20 @@ public class DishController {
      */
     @PostMapping("/status/{status}")
     @Operation(summary = "菜品起售、停售")
-    public Result<?> enableOrDisable(@PathVariable Integer status, Long id){
-        log.info("菜品起售停售，菜品id：{}，状态：{}", id,status);
-        dishService.enableOrDisable(status,id);
+    public Result<?> enableOrDisable(@PathVariable Integer status, Long id) {
+        log.info("菜品起售停售，菜品id：{}，状态：{}", id, status);
+        dishService.enableOrDisable(status, id);
         return Result.success();
     }
 
     /**
      * 根据分类id查询菜品
+     *
      * @return
      */
     @GetMapping("/list")
     @Operation(summary = "根据分类id查询菜品")
-    public Result<List<Dish>> list(Long categoryId){
+    public Result<List<Dish>> list(Long categoryId) {
         log.info("根据分类id查询菜品：{}", categoryId);
         List<Dish> dishes = dishService.list(categoryId);
         return Result.success(dishes);
