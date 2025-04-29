@@ -46,11 +46,17 @@ sky:
     admin-token-name: ${sky.jwt.admin-token-name}
     # 设置jwt过期时间
     admin-ttl: ${sky.jwt.admin-ttl}
+    user-secret-key: ${sky.jwt.user-secret-key}
+    user-token-name: ${sky.jwt.user-token-name}
+    user-ttl: ${sky.jwt.user-ttl}
   alioss:
     bucket-name: ${sky.alioss.bucket-name}
     endpoint: ${sky.alioss.endpoint}
     access-key-id: ${sky.alioss.access-key-id}
     access-key-secret: ${sky.alioss.access-key-secret}
+  wechat:
+    appid: ${sky.wechat.appid}
+    secret: ${sky.wechat.secret}
 
 # Knife4j配置
 # springdoc-openapi配置
