@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,18 +26,6 @@ public class DishController {
 
     @Autowired
     private DishService dishService;
-    @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
-
-    /**
-     * 清理缓存数据
-     *
-     * @param pattern
-     */
-    private void cleanCache(String pattern) {
-        Set<String> keys = redisTemplate.keys(pattern);
-        redisTemplate.delete(keys);
-    }
 
     /**
      * 新增菜品
@@ -46,14 +35,10 @@ public class DishController {
      */
     @PostMapping
     @Operation(summary = "新增菜品")
+    @CacheEvict(cacheNames = "dishCache", key = "#dishDTO.categoryId")
     public Result<?> save(@RequestBody DishDTO dishDTO) {
         log.info("新增菜品：{}", dishDTO);
         dishService.saveWithFlavor(dishDTO);
-
-        ////// 清理缓存数据 ////////////
-        String key = "dish_" + dishDTO.getCategoryId();
-        cleanCache(key);
-
         return Result.success();
     }
 
@@ -79,13 +64,10 @@ public class DishController {
      */
     @DeleteMapping
     @Operation(summary = "删除菜品")
+    @CacheEvict(cacheNames = "dishCache", allEntries = true)
     public Result<?> delete(@RequestParam List<Long> ids) {
         log.info("删除菜品：{}", ids);
         dishService.deleteBatch(ids);
-
-        //////////// 清理所有的菜品缓存数据 //////
-        cleanCache("dish_*");
-
         return Result.success();
     }
 
@@ -111,14 +93,10 @@ public class DishController {
      */
     @PutMapping
     @Operation(summary = "修改菜品")
+    @CacheEvict(cacheNames = "dishCache", allEntries = true)
     public Result<?> update(@RequestBody DishDTO dishDTO) {
         log.info("修改菜品：{}", dishDTO);
         dishService.updateWithFlavor(dishDTO);
-
-        //////// 清理缓存 ////////////
-        String key = "dish_" + dishDTO.getCategoryId();
-        cleanCache(key);
-
         return Result.success();
     }
 
@@ -131,13 +109,10 @@ public class DishController {
      */
     @PostMapping("/status/{status}")
     @Operation(summary = "菜品起售、停售")
+    @CacheEvict(cacheNames = "dishCache", allEntries = true)
     public Result<?> enableOrDisable(@PathVariable Integer status, Long id) {
         log.info("菜品起售停售，菜品id：{}，状态：{}", id, status);
         dishService.enableOrDisable(status, id);
-
-        /////// 清理缓存 /////////
-        cleanCache("dish_*");
-
         return Result.success();
     }
 
