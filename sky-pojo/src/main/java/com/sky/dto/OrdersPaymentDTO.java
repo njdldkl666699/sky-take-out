@@ -1,15 +1,18 @@
 package com.sky.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
+@Schema(title = "订单支付DTO")
 public class OrdersPaymentDTO implements Serializable {
-    //订单号
+
+    @Schema(title = "订单号")
     private String orderNumber;
 
-    //付款方式
+    @Schema(title = "付款方式")
     private Integer payMethod;
 
 }

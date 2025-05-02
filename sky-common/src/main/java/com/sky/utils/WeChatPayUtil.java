@@ -1,7 +1,7 @@
 package com.sky.utils;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import com.sky.properties.WeChatProperties;
 import com.wechat.pay.contrib.apache.httpclient.WechatPayHttpClientBuilder;
 import com.wechat.pay.contrib.apache.httpclient.util.PemUtil;
@@ -17,9 +17,9 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.security.PrivateKey;
@@ -79,7 +79,7 @@ public class WeChatPayUtil {
      * @param body
      * @return
      */
-    private String post(String url, String body) throws Exception {
+    private String post(String url, String body) throws IOException {
         CloseableHttpClient httpClient = getClient();
 
         HttpPost httpPost = new HttpPost(url);
@@ -161,7 +161,7 @@ public class WeChatPayUtil {
      * @param openid      微信用户的openid
      * @return
      */
-    public JSONObject pay(String orderNum, BigDecimal total, String description, String openid) throws Exception {
+    public com.alibaba.fastjson2.JSONObject pay(String orderNum, BigDecimal total, String description, String openid) throws Exception {
         //统一下单，生成预支付交易单
         String bodyAsString = jsapi(orderNum, total, description, openid);
         //解析返回结果
