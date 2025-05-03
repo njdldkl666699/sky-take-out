@@ -1,6 +1,7 @@
 package com.sky.service.impl;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
@@ -18,6 +19,7 @@ import com.sky.vo.OrderPaymentVO;
 import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderSubmitVO;
 import com.sky.vo.OrderVO;
+import com.sky.websocket.WebSocketServer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,12 +50,8 @@ public class OrderServiceImpl implements OrderService {
     private UserMapper userMapper;
     @Autowired
     private WeChatPayUtil weChatPayUtil;
-
-    /**
-     * <p>订单数据</p>
-     * 用于绕过支付，调用submitOrder时为其赋值，调用payment时获取订单id
-     */
-    private Orders lastSubmittedOrder;
+    @Autowired
+    private WebSocketServer webSocketServer;
 
     /**
      * 用户下单
@@ -89,9 +87,6 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(Orders.PENDING_PAYMENT);
         order.setPayStatus(Orders.UN_PAID);
         order.setOrderTime(LocalDateTime.now());
-
-        // 将订单数据赋给this的变量（是不是用BaseContext更好？）
-        this.lastSubmittedOrder = order;
 
         // 向订单表中插入数据
         orderMapper.insert(order);
@@ -144,19 +139,10 @@ public class OrderServiceImpl implements OrderService {
 //            throw new OrderBusinessException("该订单已支付");
 //        }
 
-        // 绕过微信支付，详见：
-        // https://blog.csdn.net/RuanFun/article/details/135861498?spm=1001.2014.3001.5501
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code", "ORDERPAID");
         OrderPaymentVO vo = jsonObject.toJavaObject(OrderPaymentVO.class);
         vo.setPackageStr(jsonObject.getString("package"));
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("id", lastSubmittedOrder.getId());
-        map.put("status", Orders.TO_BE_CONFIRMED);  // 支付状态，已支付
-        map.put("payStatus", Orders.PAID);  // 订单状态，待接单
-        map.put("checkoutTime", LocalDateTime.now());   // 更新支付时间
-        orderMapper.updateByMap(map);
 
         return vo;
     }
@@ -180,8 +166,14 @@ public class OrderServiceImpl implements OrderService {
                 .payStatus(Orders.PAID)
                 .checkoutTime(LocalDateTime.now())
                 .build();
-
         orderMapper.update(orders);
+
+        // 通过WebSocket实现来单提醒，向客户端浏览器推送消息
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("type", 1);  // 1为来单提醒 2为客户催单
+        jsonObject.put("orderId", orders.getId());
+        jsonObject.put("content", "订单号：" + outTradeNo);
+        webSocketServer.sendToAllClient(jsonObject.toString());
     }
 
     /**
@@ -519,6 +511,27 @@ public class OrderServiceImpl implements OrderService {
                 .build();
 
         orderMapper.update(order);
+    }
+
+    /**
+     * 催单
+     *
+     * @param id
+     */
+    @Override
+    public void reminder(Long id) {
+        // 检查订单是否存在
+        Orders orderDB = orderMapper.getById(id);
+        if (orderDB == null) {
+            throw new OrderBusinessException(MessageConstant.ORDER_NOT_FOUND);
+        }
+
+        // 基于WebSocket实现催单
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("type", 2);   // 1为来单提醒 2为客户催单
+        jsonObject.put("orderId", orderDB.getId());
+        jsonObject.put("content", "订单号：" + orderDB.getNumber());
+        webSocketServer.sendToAllClient(jsonObject.toString());
     }
 
     /**

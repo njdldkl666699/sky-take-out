@@ -44,16 +44,6 @@
         where id = #{id}
     </update>
 
-    <update id="updateByMap">
-        update orders
-        <set>
-            <if test="status != null">status = #{status},</if>
-            <if test="payStatus != null">pay_status = #{payStatus},</if>
-            <if test="checkoutTime != null">checkout_time = #{checkoutTime},</if>
-        </set>
-        where id = #{id}
-    </update>
-
     <select id="pageQuery" resultType="com.sky.entity.Orders">
         select * from orders
         <where>

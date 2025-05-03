@@ -38,7 +38,12 @@ public class OrderController {
     }
 
     /**
-     * 订单支付
+     * <p>订单支付</p>
+     * 绕过微信支付，详见：<br>
+     * <a href="https://blog.csdn.net/RuanFun/article/details/135861498?spm=1001.2014.3001.5501">
+     * 《苍穹外卖》电商实战项目实操笔记系列（P66~P122）【中】-CSDN博客</a>
+     * <br>
+     * <a href="https://www.bilibili.com/opus/835274695619117077">【苍穹外卖】完结~撒花！ - 哔哩哔哩</a>
      *
      * @param ordersPaymentDTO
      * @return
@@ -49,6 +54,10 @@ public class OrderController {
         log.info("订单支付：{}", ordersPaymentDTO);
         OrderPaymentVO orderPaymentVO = orderService.payment(ordersPaymentDTO);
         log.info("生成预支付交易单：{}", orderPaymentVO);
+
+        // 模拟微信支付成功
+        orderService.paySuccess(ordersPaymentDTO.getOrderNumber());
+        log.info("模拟微信支付成功：{}", ordersPaymentDTO.getOrderNumber());
         return Result.success(orderPaymentVO);
     }
 
@@ -98,14 +107,29 @@ public class OrderController {
 
     /**
      * 再来一单
+     *
      * @param id
      * @return
      */
     @PostMapping("/repetition/{id}")
     @Operation(summary = "再来一单")
-    public Result<?> repetition(@PathVariable Long id){
-        log.info("再来一单：{}",id);
+    public Result<?> repetition(@PathVariable Long id) {
+        log.info("再来一单：{}", id);
         orderService.repetition(id);
+        return Result.success();
+    }
+
+    /**
+     * 催单
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/reminder/{id}")
+    @Operation(summary = "催单")
+    public Result<?> reminder(@PathVariable Long id) {
+        log.info("催单：{}", id);
+        orderService.reminder(id);
         return Result.success();
     }
 }

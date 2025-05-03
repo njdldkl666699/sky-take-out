@@ -6,6 +6,8 @@ import com.sky.entity.Orders;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @Mapper
@@ -36,18 +38,6 @@ public interface OrderMapper {
     void update(Orders orders);
 
     /**
-     * <p>根据map更新订单信息</p>
-     * 绕过微信支付使用<br>
-     * id - 订单id<br>
-     * status - 订单状态<br>
-     * payStatus - 支付状态<br>
-     * checkoutTime - 结账时间<br>
-     *
-     * @param map
-     */
-    void updateByMap(Map<String, Object> map);
-
-    /**
      * 分页查询
      *
      * @param ordersPageQueryDTO
@@ -57,6 +47,7 @@ public interface OrderMapper {
 
     /**
      * 通过订单id查询订单
+     *
      * @param id
      * @return
      */
@@ -65,9 +56,20 @@ public interface OrderMapper {
 
     /**
      * 统计某状态订单数量
+     *
      * @param status
      * @return
      */
     @Select("select count(id) from orders where status = #{status}")
     Integer countByStatus(Integer status);
+
+    /**
+     * 根据状态和下单时间查询订单
+     *
+     * @param status
+     * @param orderTime
+     * @return
+     */
+    @Select("select * from orders where status = #{status} and order_time < #{orderTime}")
+    List<Orders> getByStatusAndOrderTimeLT(Integer status, LocalDateTime orderTime);
 }
