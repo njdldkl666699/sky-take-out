@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@RestController("userOrderController")
 @RequestMapping("/user/order")
 @Tag(name = "订单接口")
 @Slf4j
@@ -78,7 +78,7 @@ public class OrderController {
     @Operation(summary = "查询订单详情")
     public Result<OrderVO> detail(@PathVariable Long id) {
         log.info("查询订单详情：{}", id);
-        OrderVO orderVO = orderService.getDetail(id);
+        OrderVO orderVO = orderService.details(id);
         return Result.success(orderVO);
     }
 
