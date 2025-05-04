@@ -8,6 +8,7 @@ import com.sky.vo.TurnoverReportVO;
 import com.sky.vo.UserReportVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -92,5 +93,15 @@ public class ReportController {
         log.info("查询销量排名top10接口，开始日期：{}，结束日期：{}", begin, end);
         SalesTop10ReportVO salesTop10ReportVO = reportService.salesTop10(begin, end);
         return Result.success(salesTop10ReportVO);
+    }
+
+    /**
+     * 导出Excel报表接口
+     * @param response
+     */
+    @GetMapping("/export")
+    @Operation(summary = "导出Excel报表接口")
+    public void export(HttpServletResponse response){
+        reportService.exportBusinessData(response);
     }
 }
