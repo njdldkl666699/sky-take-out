@@ -57,6 +57,8 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
      * 扩展Spring MVC框架的消息转化器
      *
      * @param converters
+     * @see <a href="https://www.zxcms.com/content/s6gx7ry331l6pq.html">
+     *     Spring Boot 自定义 HttpMessageConverter 导致 Swagger 文档无法访问的解决方案 - 自学内容网</a>
      */
     @Override
     protected void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
