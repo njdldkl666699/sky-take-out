@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
+import java.time.LocalDateTime;
+
 @Mapper
 public interface UserMapper {
 
@@ -36,4 +38,13 @@ public interface UserMapper {
      */
     @Select("select * from user where id = #{id}")
     User getById(Long id);
+
+    /**
+     * 通过时间范围统计用户数量
+     *
+     * @param begin
+     * @param end
+     * @return
+     */
+    Integer countByTimeRange(LocalDateTime begin, LocalDateTime end);
 }

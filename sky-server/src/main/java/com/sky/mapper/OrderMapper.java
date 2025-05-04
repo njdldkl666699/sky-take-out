@@ -72,4 +72,26 @@ public interface OrderMapper {
      */
     @Select("select * from orders where status = #{status} and order_time < #{orderTime}")
     List<Orders> getByStatusAndOrderTimeLT(Integer status, LocalDateTime orderTime);
+
+    /**
+     * 根据动态条件统计营业额
+     *
+     * @param map <br>
+     *            status - 订单状态<br>
+     *            begin - 开始日期时间<br>
+     *            end - 结束日期时间
+     * @return
+     */
+    Double sumTurnoverByMap(Map<String, Object> map);
+
+    /**
+     * 根据动态条件统计订单数量
+     *
+     * @param map <br>
+     *            status - 订单状态<br>
+     *            begin - 开始日期时间<br>
+     *            end - 结束日期时间
+     * @return
+     */
+    Integer countByMap(Map<String, Object> map);
 }
