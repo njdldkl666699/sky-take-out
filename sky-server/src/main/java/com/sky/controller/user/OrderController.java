@@ -38,15 +38,14 @@ public class OrderController {
     }
 
     /**
-     * <p>订单支付</p>
-     * 绕过微信支付，详见：<br>
-     * <a href="https://blog.csdn.net/RuanFun/article/details/135861498?spm=1001.2014.3001.5501">
-     * 《苍穹外卖》电商实战项目实操笔记系列（P66~P122）【中】-CSDN博客</a>
-     * <br>
-     * <a href="https://www.bilibili.com/opus/835274695619117077">【苍穹外卖】完结~撒花！ - 哔哩哔哩</a>
+     * 订单支付
      *
      * @param ordersPaymentDTO
      * @return
+     * @see <a href="https://blog.csdn.net/RuanFun/article/details/135861498?spm=1001.2014.3001.5501">
+     * 《苍穹外卖》电商实战项目实操笔记系列（P66~P122）【中】-CSDN博客</a>
+     * <br>
+     * <a href="https://www.bilibili.com/opus/835274695619117077">【苍穹外卖】完结~撒花！ - 哔哩哔哩</a>
      */
     @PutMapping("/payment")
     @Operation(summary = "订单支付")

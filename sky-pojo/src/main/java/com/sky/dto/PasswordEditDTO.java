@@ -1,19 +1,21 @@
 package com.sky.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
+@Schema(title = "修改密码DTO")
 public class PasswordEditDTO implements Serializable {
 
-    //员工id
+    @Schema(title = "员工id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private Long empId;
 
-    //旧密码
+    @Schema(title = "旧密码")
     private String oldPassword;
 
-    //新密码
+    @Schema(title = "新密码")
     private String newPassword;
 
 }
