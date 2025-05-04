@@ -9,6 +9,7 @@ import com.sky.vo.DishVO;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface DishMapper {
@@ -16,11 +17,10 @@ public interface DishMapper {
     /**
      * 根据分类id查询菜品数量
      *
-     * @param categoryId
+     * @param map
      * @return
      */
-    @Select("select count(id) from dish where category_id = #{categoryId}")
-    Integer countByCategoryId(Long categoryId);
+    Integer countByMap(Map<String, Object> map);
 
     /**
      * 插入菜品数据

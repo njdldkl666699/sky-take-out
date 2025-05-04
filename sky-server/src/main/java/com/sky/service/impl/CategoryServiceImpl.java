@@ -20,7 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 分类业务层
@@ -71,15 +73,17 @@ public class CategoryServiceImpl implements CategoryService {
      * @param id
      */
     public void deleteById(Long id) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("categoryId", id);
         //查询当前分类是否关联了菜品，如果关联了就抛出业务异常
-        Integer count = dishMapper.countByCategoryId(id);
+        Integer count = dishMapper.countByMap(map);
         if (count > 0) {
             //当前分类下有菜品，不能删除
             throw new DeletionNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_DISH);
         }
 
         //查询当前分类是否关联了套餐，如果关联了就抛出业务异常
-        count = setmealMapper.countByCategoryId(id);
+        count = setmealMapper.countByMap(map);
         if (count > 0) {
             //当前分类下有菜品，不能删除
             throw new DeletionNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_SETMEAL);

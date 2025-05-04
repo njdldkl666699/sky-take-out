@@ -10,6 +10,7 @@ import com.sky.vo.SetmealVO;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface SetmealMapper {
@@ -17,11 +18,10 @@ public interface SetmealMapper {
     /**
      * 根据分类id查询套餐的数量
      *
-     * @param id
+     * @param map
      * @return
      */
-    @Select("select count(id) from setmeal where category_id = #{categoryId}")
-    Integer countByCategoryId(Long id);
+    Integer countByMap(Map<String, Object> map);
 
     /**
      * 插入套餐数据
